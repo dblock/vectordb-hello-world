@@ -71,14 +71,19 @@ def main():
     client.post(
         urljoin(service_endpoint, "/vectors/upsert"),
         headers=headers,
-        json={"vectors": vectors},
+        json={"vectors": vectors, "namespace": "namespace"},
     )
 
     # search
     results = client.post(
         urljoin(service_endpoint, "/query"),
         headers=headers,
-        json={"vector": [0.1, 0.2, 0.3], "top_k": 1},
+        json={
+            "vector": [0.1, 0.2, 0.3],
+            "top_k": 1,
+            "namespace": "namespace",
+            "includeMetadata": True,
+        },
     ).json()
 
     print(results)

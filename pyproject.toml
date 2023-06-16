@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "vectordb-hello-world"
+version = "0.1.0"
+description = "Samples for querying vector DBs."
+authors = ["Daniel Doubrovkine <dblock@dblock.org>"]
+license = "Apache 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+httpx = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

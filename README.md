@@ -54,6 +54,31 @@ USERNAME=admin PASSWORD=admin ENDPOINT=https://localhost:9200 poetry run src/ope
 < DELETE https://localhost:9200/my-index - 200
 ```
 
+### Vespa
+
+You can run Vespa in a [managed cloud service](https://cloud.vespa.ai/), but for this example we'll use again a Docker container:
+
+```sh
+docker info | grep "Total Memory" # make sure it's at least 4Gb
+docker run --detach --name vespa --hostname vespa-container \
+  --publish 8080:8080 --publish 19071:19071 \
+  vespaengine/vespa
+```
+
+Deploy the sample application and schema:
+```sh
+(cd src/vespa/vector-app && zip -r - .) | \
+  curl --header Content-Type:application/zip --data-binary @- \
+  localhost:19071/application/v2/tenant/default/prepareandactivate
+
+curl --header Content-Type:application/zip -XPOST localhost:19071/application/v2/tenant/default/session
+```
+
+Finally, run the Vespa sample ingestion and search:
+```sh
+ENDPOINT=http://localhost:8080 poetry run src/vespa/hello.py
+```
+
 ## Developing
 
 See [DEVELOPER_GUIDE](DEVELOPER_GUIDE.md).

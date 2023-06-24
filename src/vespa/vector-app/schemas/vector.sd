@@ -1,0 +1,27 @@
+schema vector {
+    document vector {
+        field id type string {
+            indexing: summary | attribute
+        }
+        field values type tensor<float>(x[3]) {
+            indexing: summary | attribute
+            attribute {
+                distance-metric: angular
+            }
+        }
+        struct metadatatype {
+            field genre type string {}
+        }
+        field metadata type metadatatype {
+            indexing: summary
+        }
+    }
+    rank-profile vector_similarity {
+        inputs {
+            query(vector_query_embedding) tensor<float>(x[3])
+        }
+        first-phase {
+            expression: closeness(field, values)
+        }
+    }
+}

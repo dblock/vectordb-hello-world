@@ -74,7 +74,7 @@ Deploy the sample application and schema:
 curl --header Content-Type:application/zip -XPOST localhost:19071/application/v2/tenant/default/session
 ```
 
-Finally, run the Vespa sample ingestion and search:
+Finally, run the Vespa sample ingestion and search (you might have to wait for a few seconds for the endpoint to be ready after the last command):
 ```sh
 ENDPOINT=http://localhost:8080 poetry run src/vespa/hello.py
 ```

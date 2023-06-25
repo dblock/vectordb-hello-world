@@ -5,7 +5,6 @@ import json
 from httpx import Client, Response
 from urllib.parse import urljoin
 
-
 def log_request(request):
     print(f"> {request.method} {request.url}")
 
@@ -50,7 +49,7 @@ def main():
         client.post(urljoin(endpoint, "/document/v1/vector/vector/docid/" + vector["id"]), headers=headers, data=data)
 
     # search
-    query = "yql=select * from sources * where {targetHits: 1}nearestNeighbor(values,vector_query_embedding)" \
+    query = "yql=select * from sources * where {targetHits: 1} nearestNeighbor(values,vector_query_embedding)" \
         "&ranking.profile=vector_similarity" \
         "&hits=1" \
         "&input.query(vector_query_embedding)=[0.1,0.2,0.3]"
@@ -60,9 +59,9 @@ def main():
     ).json()
     print(results["root"]["children"][0]["fields"])
 
-    # delete docs
-    for vector in vectors:
-        client.delete(urljoin(endpoint, "/document/v1/vector/vector/docid/" + vector["id"]), headers=headers)
+    # Delete application
+    config_endpoint = os.environ["CONFIG_ENDPOINT"]
+    client.delete(urljoin(config_endpoint, "/application/v2/tenant/default/application/default"), headers=headers)
 
 if __name__ == "__main__":
     main()

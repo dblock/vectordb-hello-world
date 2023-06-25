@@ -1,6 +1,7 @@
 - [VectorDB Hello World](#vectordb-hello-world)
   - [Pinecone](#pinecone)
   - [OpenSearch](#opensearch)
+  - [Vespa](#vespa)
 - [Developing](#developing)
 - [License](#license)
 - [Copyright](#copyright)
@@ -56,7 +57,7 @@ USERNAME=admin PASSWORD=admin ENDPOINT=https://localhost:9200 poetry run src/ope
 
 ### Vespa
 
-You can run Vespa in a [managed cloud service](https://cloud.vespa.ai/), but for this example we'll use again a Docker container:
+Start [Vespa](https://vespa.ai/) in a Docker container. You may also run it in the [vespa.ai cloud service](https://cloud.vespa.ai/). Make sure you [configure Docker with at least 4GB RAM](https://docs.docker.com/desktop/settings/mac/#resources) (check with `docker info | grep "Total Memory"`).
 
 ```sh
 docker info | grep "Total Memory" # make sure it's at least 4Gb
@@ -65,7 +66,7 @@ docker run --detach --name vespa --hostname vespa-container \
   vespaengine/vespa
 ```
 
-Deploy the sample application and schema:
+Deploy the sample application and schema.
 ```sh
 (cd src/vespa/vector-app && zip -r - .) | \
   curl --header Content-Type:application/zip --data-binary @- \
@@ -76,7 +77,7 @@ curl --header Content-Type:application/zip -XPOST localhost:19071/application/v2
 
 Finally, run the Vespa sample ingestion and search (you might have to wait for a few seconds for the endpoint to be ready after the last command):
 ```sh
-ENDPOINT=http://localhost:8080 poetry run src/vespa/hello.py
+ENDPOINT=http://localhost:8080 CONFIG_ENDPOINT=http://localhost:19071 poetry run src/vespa/hello.py
 ```
 
 ## Developing

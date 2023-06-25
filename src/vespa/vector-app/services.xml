@@ -7,7 +7,6 @@
             <node hostalias="node1" />
         </nodes>
     </container>
-
     <content id="vector" version="1.0">
         <redundancy>2</redundancy>
         <documents>
@@ -17,5 +16,4 @@
             <node hostalias="node1" distribution-key="0" />
         </nodes>
     </content>
-
 </services>

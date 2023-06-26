@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
 import os
-import time
-import json
 from httpx import Client, Response
 from urllib.parse import urljoin, urlparse
 
@@ -31,7 +29,6 @@ def main():
     ).geturl()
 
     client = Client(
-        verify=False,
         event_hooks={
             "request": [log_request],
             "response": [log_response, Response.raise_for_status],

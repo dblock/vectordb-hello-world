@@ -50,7 +50,7 @@ def main():
                 "settings": {"index.knn": True},
                 "mappings": {
                     "properties": {
-                        "vector": {"type": "knn_vector", "dimension": 3},
+                        "values": {"type": "knn_vector", "dimension": 3},
                     }
                 },
             },
@@ -60,12 +60,12 @@ def main():
     vectors = [
         {
             "id": "vec1",
-            "vector": [0.1, 0.2, 0.3],
+            "values": [0.1, 0.2, 0.3],
             "metadata": {"genre": "drama"},
         },
         {
             "id": "vec2",
-            "vector": [0.2, 0.3, 0.4],
+            "values": [0.2, 0.3, 0.4],
             "metadata": {"genre": "action"},
         },
     ]
@@ -87,7 +87,7 @@ def main():
     time.sleep(1)
 
     # search
-    query = {"query": {"knn": {"vector": {"vector": [0.1, 0.2, 0.3], "k": 1}}}}
+    query = {"query": {"knn": {"values": {"vector": [0.1, 0.2, 0.3], "k": 1}}}}
 
     results = client.post(
         urljoin(endpoint, f"/{index_name}/_search"), headers=headers, json=query

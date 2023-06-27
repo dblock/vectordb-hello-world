@@ -60,30 +60,28 @@ def main():
     vectors = [
         {
             "id": "vec1",
-            "values": [0.1, 0.2, 0.3],
+            "vector": [0.1, 0.2, 0.3],
             "metadata": {"genre": "drama"},
         },
         {
             "id": "vec2",
-            "values": [0.2, 0.3, 0.4],
+            "vector": [0.2, 0.3, 0.4],
             "metadata": {"genre": "action"},
         },
     ]
 
+    # bulk insert
+
     data = ""
     for vector in vectors:
-        data += (
-            json.dumps(
-                {
-                    "index": {"_index": index_name, "_id": vector["id"]},
-                    "vector": vector["values"],
-                }
-                | {i: vector[i] for i in vector if i != "id" and i != "values"}
-            )
-            + "\n"
-        )
+        data += json.dumps({ "index": {"_index": index_name, "_id": vector["id"]} }) + "\n"
+        data += json.dumps({i: vector[i] for i in vector if i != "id"}) + "\n"
 
     client.post(urljoin(endpoint, "/_bulk"), headers=headers, data=data)
+
+    # document by document
+    # for vector in vectors:
+    #     client.post(urljoin(endpoint, f"/{index_name}/_doc/{vector['id']}"), headers=headers, json=vector)
 
     # give it some time to reindex
     time.sleep(1)
@@ -94,6 +92,7 @@ def main():
     results = client.post(
         urljoin(endpoint, f"/{index_name}/_search"), headers=headers, json=query
     ).json()
+
     print(results["hits"])
 
     # delete index

@@ -83,6 +83,9 @@ def main():
     # for vector in vectors:
     #     client.post(urljoin(endpoint, f"/{index_name}/_doc/{vector['id']}"), headers=headers, json=vector)
 
+    # get one of the documents back
+    # print(client.get(urljoin(endpoint, f"/{index_name}/_doc/vec1")).json())
+
     # give it some time to reindex
     time.sleep(1)
 

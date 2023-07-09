@@ -2,6 +2,7 @@
   - [Pinecone](#pinecone)
   - [OpenSearch](#opensearch)
   - [Vespa](#vespa)
+  - [Weaviate](#weaviate)
 - [Developing](#developing)
 - [License](#license)
 - [Copyright](#copyright)
@@ -98,6 +99,25 @@ ENDPOINT=http://localhost:8080 CONFIG_ENDPOINT=http://localhost:19071 poetry run
 {'sddocname': 'vector', 'documentid': 'id:vector:vector::vec1', 'id': 'vec1', 'values': {'type': 'tensor<float>(x[3])', 'values': [0.10000000149011612, 0.20000000298023224, 0.30000001192092896]}, 'metadata': {'genre': 'drama'}}
 > DELETE http://localhost:19071/application/v2/tenant/default/application/default
 < DELETE http://localhost:19071/application/v2/tenant/default/application/default - 200
+```
+
+### Weaviate
+Sign up at [Weaviate Cloud Services WCS](http://console.weaviate.cloud) and create a Weaviate Cluster. You will need your Cluster URL to configure your ENDPOINT = https://my_endpoint.weaviate.network. 
+Run a working sample as follows:
+
+```
+python .src/weaviate/hello.py 
+> GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects?fields=vector
+< GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects?fields=vector - 200
+No objects/index found
+> POST https://ppe-httpx-g772sx1o.weaviate.network/v1/batch/objects
+< POST https://ppe-httpx-g772sx1o.weaviate.network/v1/batch/objects - 200
+> GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects
+< GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects - 200
+> GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects?fields=vector&nearVector=%7B%27vector%27%3A%20%5B0.1%5D%2C%20%27certainty%27%3A%200.9%7D
+< GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects?fields=vector&nearVector=%7B%27vector%27%3A%20%5B0.1%5D%2C%20%27certainty%27%3A%200.9%7D - 200
+> DELETE https://ppe-httpx-g772sx1o.weaviate.network/v1/schema/Films
+< DELETE https://ppe-httpx-g772sx1o.weaviate.network/v1/schema/Films - 200
 ```
 
 ## Developing

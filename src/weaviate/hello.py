@@ -1,4 +1,8 @@
-from httpx import Client
+#!/usr/bin/env python
+
+from urllib.parse import urljoin
+
+from httpx import Client, Response
 import os
 
 
@@ -15,88 +19,67 @@ def log_response(response):
 
 
 def main():
-
-    # HTTPS Setup
     endpoint = os.environ["ENDPOINT"]
-    object_weaviate_url = endpoint + "/v1/objects"
-    schema_weaviate_url = endpoint + "/v1/schema"
-    batch_weaviate_url = endpoint + "/v1/batch/objects"
+    api_key = os.getenv("API_KEY")
 
-    # Application Headers
     headers = {
         "Accept": "application/json; charset=utf-8",
-        "Content-Type": "application/json; charset=utf-8",
-        # "Api-Key": os.environ["API_KEY"],
+        "Content-Type": "application/json; charset=utf-8"
     }
 
-    # check whether an index exists and print a message
-    params = {"fields": "vector"}
+    if not api_key is None:
+        headers["Authorization"] = f"Bearer {api_key}"
 
-    with Client(event_hooks={'request': [log_request],
-                             'response': [log_response]}) as client:
-        response = client.get(object_weaviate_url, params=params)
-
-    if response.status_code == 200:
-        data = response.json()
-        if len(data['objects']) == 0:
-            print("No objects/index found")
-    else:
-        print("An error occurred while retrieving vectors from Weaviate.")
-
-    # index data
-    vectors = [{
-        "id": "vec1",
-        "values": [0.1, 0.2, 0.3],
-        "properties": {
-           "genre": "drama"}
-        },
-        {
-            "id": "vec2",
-            "values": [0.2, 0.3, 0.4],
-            "properties": {
-                "genre": "action"
+    with Client(
+        event_hooks={
+            "request": [log_request],
+            "response": [log_response, Response.raise_for_status],
+        }
+    ) as client:
+        # index data
+        vectors = [
+            {
+                "id": "vec1",
+                "values": [0.1, 0.2, 0.3],
+                "properties": { 
+                    "genre": "drama"
+                }
+            },
+            {
+                "id": "vec2",
+                "values": [0.2, 0.3, 0.4],
+                "properties": {
+                    "genre": "action"
+                }
             }
-        }]
+        ]
 
-    # Create a  few Vectors by adding an objects
-    objects = []
-    for vector in vectors:
-        obj = {
-            "class": "Films",
-            "properties": {
-                "vector": vector["values"]
+        objects = []
+        for vector in vectors:
+            obj = {
+                "class": "Vectors",
+                "properties": {
+                    "vector": vector["values"]
+                }
+            }
+            objects.append(obj)
+
+        client.post(urljoin(endpoint, "/v1/batch/objects"), json={"objects": objects}, headers=headers)
+        
+        # search for data
+        query = {
+            "fields": "vector",
+            "nearVector": {
+                "vector": [0.1],
+                "certainty": 0.9
             }
         }
-        objects.append(obj)
 
-    data1 = {"objects": objects}
-    with Client(event_hooks={'request': [log_request],
-                             'response': [log_response]}) as client:
-        client.post(batch_weaviate_url, json=data1, headers=headers)
-        client.get(object_weaviate_url)
+        response = client.get(urljoin(endpoint, "/v1/objects"), params=query, headers=headers).json()
+        for obj in response["objects"]:
+            print(obj)
 
-    params = {"fields": "vector",
-              "nearVector": {"vector": [0.1],
-                             "certainty": 0.9}}
-
-    with Client(event_hooks={'request': [log_request],
-                             'response': [log_response]}) as client:
-        response = client.get(object_weaviate_url, params=params)
-
-    if response.status_code == 200:
-        data = response.json()
-        if len(data['objects']) == 0:
-            print("No objects found in the response.")
-    else:
-        print("An error occurred while retrieving objects from Weaviate.")
-
-    # delete the class for remove all indexes ans objects
-    object_class = '/Films'
-    class_weaviate_url = schema_weaviate_url + object_class
-
-    with Client(event_hooks={'request': [log_request],
-                             'response': [log_response]}) as client:
-        response = client.delete(class_weaviate_url)
+        client.delete(urljoin(endpoint, f"/v1/schema/Vectors"), headers=headers)
 
 
 if __name__ == "__main__":

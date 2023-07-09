@@ -102,88 +102,22 @@ ENDPOINT=http://localhost:8080 CONFIG_ENDPOINT=http://localhost:19071 poetry run
 ```
 
 ### Weaviate
-Sign up at [Weaviate Cloud Services WCS](http://console.weaviate.cloud) and create a Weaviate Cluster. You will need your Cluster URL to configure your endpoint https://my_endpoint.weaviate.network. The hello_httpx_test uses httpx library and has examples for addition of one object, batch additions and several queries. 
+Sign up at [Weaviate Cloud Services WCS](http://console.weaviate.cloud) and create a Weaviate Cluster. You will need your Cluster URL to configure your ENDPOINT = https://my_endpoint.weaviate.network. 
+Run a working sample as follows:
 
 ```
-python ./weaviate/hello_httpx_test.py 'https://my_endpoint.weaviate.network' --verbose
-```
-
-A running sample for addition of an object
-
-```
-Request event hook: GET https://my_endpoint.weaviate.network/v1/objects - Waiting for response
-Response event hook: GET https://my_endpoint.weaviate.network/v1/objects - Status 200
-https://my_endpoint.weaviate.network/v1/objects
-Status code: 200
-{
-    "deprecations": null,
-    "objects": [
-        {
-            "class": "Athlete",
-            "creationTimeUnix": 1688535681981,
-            "id": "307262fb-0adc-4c8e-a34e-ca193343c663",
-            "lastUpdateTimeUnix": 1688535681981,
-            "properties": {
-                "age": 26,
-                "country": "France",
-                "name": "Alldritt",
-                "points": 1,
-                "rank": 1,
-                "sports": "Rugby"
-            },
-            "vectorWeights": null
-        }
-    ],
-    "totalResults": 1
-}
-```
-
-Here is an example of batching
-
-```
-Request event hook: POST https://my_endpoint.weaviate.network/v1/batch/objects - Waiting for response
-Response event hook: POST https://my_endpoint.weaviate.network/v1/batch/objects - Status 200
-https://my_endpoint.weaviate.network/v1/batch/objects
-Status code: 200
-{
-......
-        {
-            "class": "Athlete",
-            "creationTimeUnix": 1688535682339,
-            "id": "f42e9d7b-8831-4e12-9aa3-bb01554bd2bf",
-            "lastUpdateTimeUnix": 1688535682339,
-            "properties": {
-                "age": 25,
-                "country": "USA",
-                "name": "Amer1",
-                "points": 2890,
-                "rank": 5,
-                "sports": "Tennis"
-            },
-            "vectorWeights": null
-        }
-    ],
-    "totalResults": 10
-}
-```
-
-You can use the hello_httpx_clean.py to delete all objects in your cluster.
-
-```
-python ./weaviate/hello_httpx_clean.py 'https://myendpointweaviate.network' --verbose
-
-https://myendpoint.weaviate.network/v1/schema/Athlete
-Request event hook: DELETE https://myendpoint.weaviate.network/v1/schema/Athlete - Waiting for response
-Response event hook: DELETE https://myendpoint.weaviate.network/v1/schema/Athlete - Status 200
-https://myendpoint.network/v1/schema/Athlete
-Status code: 200
-Request event hook: GET https://myendpoint.weaviate.network/v1/schema - Waiting for response
-Response event hook: GET https://myendpoint.weaviate.network/v1/schema - Status 200
-https://myendpoint.weaviate.network/v1/schema
-Status code: 200
-{
-    "classes": []
-}
+python .src/weaviate/hello.py 
+> GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects?fields=vector
+< GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects?fields=vector - 200
+No objects/index found
+> POST https://ppe-httpx-g772sx1o.weaviate.network/v1/batch/objects
+< POST https://ppe-httpx-g772sx1o.weaviate.network/v1/batch/objects - 200
+> GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects
+< GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects - 200
+> GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects?fields=vector&nearVector=%7B%27vector%27%3A%20%5B0.1%5D%2C%20%27certainty%27%3A%200.9%7D
+< GET https://ppe-httpx-g772sx1o.weaviate.network/v1/objects?fields=vector&nearVector=%7B%27vector%27%3A%20%5B0.1%5D%2C%20%27certainty%27%3A%200.9%7D - 200
+> DELETE https://ppe-httpx-g772sx1o.weaviate.network/v1/schema/Films
+< DELETE https://ppe-httpx-g772sx1o.weaviate.network/v1/schema/Films - 200
 ```
 
 ## Developing

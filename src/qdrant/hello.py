@@ -21,7 +21,7 @@ def log_response(response):
 def main():
 
     endpoint = os.environ["ENDPOINT"]
-    api_key = os.getenv("API_KEY")
+    api_key = os.environ["API_KEY"]
 
     headers = {
         "Accept": "application/json; charset=utf-8",
@@ -31,7 +31,7 @@ def main():
 
     index_name = "my-index"
 
-    vector = {
+    index = {
         "vectors": {
             "size": 3,
             "distance": "Cosine"
@@ -63,26 +63,26 @@ def main():
             "response": [log_response, Response.raise_for_status],
         }
     ) as client:
-        client.get(urljoin(endpoint, "/collections"), headers=headers),
+        client.get(urljoin(endpoint, "collections"), headers=headers),
 
         # create the index
-        client.put(urljoin(endpoint, "/collections/" + index_name),
-                   json=vector, headers=headers)
+        client.put(urljoin(endpoint, f"/collections/{index_name}"),
+                   json=index, headers=headers)
 
         # upload vectors
-        client.put(urljoin(endpoint,
-                       "/collections/" + index_name + "/points?wait=true"),
-                       data=dumps(payload), headers=headers)
+        client.put(
+            urljoin(endpoint, f"/collections/{index_name}/points?wait=true"),
+            data=dumps(payload), headers=headers)
 
-        # search for data
+        # search for vectors
         query = '{"vector": [0.1,0.2,0.3], "limit": 1}'
-        response = client.post(urljoin(endpoint,
-                            "/collections/" + index_name + "/points/search"),
-                            data=query, headers=headers)
+        response = client.post(
+            urljoin(endpoint, f"/collections/{index_name}/points/search"),
+            data=query, headers=headers)
         print(response.json())
 
-        # delete the database
-        client.delete(urljoin(endpoint, "/collections/"+ index_name),
+        # delete the collection
+        client.delete(urljoin(endpoint, f"/collections/{index_name}"),
                       headers=headers)
 
 

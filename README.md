@@ -3,6 +3,7 @@
   - [OpenSearch](#opensearch)
   - [Vespa](#vespa)
   - [Weaviate](#weaviate)
+  - [Qdrant](#qdrant)
 - [Developing](#developing)
 - [License](#license)
 - [Copyright](#copyright)

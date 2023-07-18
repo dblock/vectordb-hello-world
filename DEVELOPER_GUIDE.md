@@ -2,10 +2,9 @@
 - [Building](#building)
   - [Install Prerequisites](#install-prerequisites)
     - [Pyenv](#pyenv)
-    - [Python 3.7](#python-37)
+    - [Python 3.9](#python-39)
     - [Poetry](#poetry)
   - [Install Dependencies](#install-dependencies)
-  - [Run Tests](#run-tests)
 
 ## Forking and Cloning
 
@@ -25,20 +24,20 @@ Use pyenv to manage multiple versions of Python. This can be installed with [pye
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
 ```
 
-#### Python 3.7
+#### Python 3.9
 
-Python projects in this repository use Python 3.7. See the [Python Beginners Guide](https://wiki.python.org/moin/BeginnersGuide) if you have never worked with the language.
+Python projects in this repository use Python 3.9. See the [Python Beginners Guide](https://wiki.python.org/moin/BeginnersGuide) if you have never worked with the language.
 
 ```
 $ python --version
-Python 3.7.16
+Python 3.9.16
 ```
 
 If you are using pyenv.
 
 ```
-pyenv install 3.7
-pyenv global 3.7
+pyenv install 3.9
+pyenv global 3.9
 ```
 
 #### Poetry

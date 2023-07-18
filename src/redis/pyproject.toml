@@ -1,14 +1,15 @@
 [tool.poetry]
-name = "vectordb-hello-world"
+name = "vectordb-hello-world (redis)"
 version = "0.1.0"
-description = "Samples for querying vector DBs."
+description = "Sample for querying vector DBs, Redis edition."
 authors = ["Daniel Doubrovkine <dblock@dblock.org>"]
 license = "Apache 2.0"
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-httpx = "*"
+redis = "*"
+numpy = "^1.25"
 
 [build-system]
 requires = ["poetry-core"]

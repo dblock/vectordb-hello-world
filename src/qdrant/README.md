@@ -3,7 +3,8 @@
 Sign up at [Qdrant Cloud Services WCS](http://cloud.qdrant.io/), and create a new free tier Qdrant Cluster with authentication. Note your cluster URL and API key.
 
 ```
-API_KEY=... ENDPOINT=https://my-cluster.cloud.qdrant.io:6333 poetry run src/qdrant/hello.py
+poetry install
+API_KEY=... ENDPOINT=https://my-cluster.cloud.qdrant.io:6333 poetry run ./hello.py
 
 > GET https://my-cluster.cloud.qdrant.io:6333/collections
 < GET https://my-cluster.cloud.qdrant.io:6333/collections - 200

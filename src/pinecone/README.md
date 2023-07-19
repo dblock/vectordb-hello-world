@@ -5,7 +5,8 @@ Sign up for [Pinecone](https://pinecone.io), get an `API_TOKEN` and a `PROJECT_I
 Run a working sample as follows.
 
 ```
-API_KEY=... PROJECT_ID=... ENDPOINT=https://us-west4-gcp-free.pinecone.io poetry run src/pinecone/hello.py
+poetry install
+API_KEY=... PROJECT_ID=... ENDPOINT=https://us-west4-gcp-free.pinecone.io poetry run ./hello.py
 
 > GET https://controller.us-west4-gcp-free.pinecone.io/databases
 < GET https://controller.us-west4-gcp-free.pinecone.io/databases - 200

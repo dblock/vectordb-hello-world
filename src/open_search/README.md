@@ -10,7 +10,8 @@ docker run -d -p 9200:9200 -p 9600:9600 -e "discovery.type=single-node" opensear
 Run a working sample as follows.
 
 ```
-USERNAME=admin PASSWORD=admin ENDPOINT=https://localhost:9200 poetry run src/open_search/hello.py
+poetry install
+USERNAME=admin PASSWORD=admin ENDPOINT=https://localhost:9200 poetry run ./hello.py
 
 > GET https://localhost:9200/_cat/indices
 < GET https://localhost:9200/_cat/indices - 200

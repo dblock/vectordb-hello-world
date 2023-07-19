@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "vectordb-hello-world"
+name = "vectordb-hello-world-weaviate"
 version = "0.1.0"
-description = "Samples for querying vector DBs."
+description = "Samples for querying vector DBs, Weaviate edition."
 authors = ["Daniel Doubrovkine <dblock@dblock.org>"]
 license = "Apache 2.0"
 readme = "README.md"

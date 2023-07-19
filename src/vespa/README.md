@@ -20,7 +20,7 @@ docker run --detach --name vespa --hostname vespa-container \
 Deploy the sample application and schema.
 
 ```sh
-(cd src/vespa/vector-app && zip -r - .) | \
+(cd vector-app && zip -r - .) | \
   curl --header Content-Type:application/zip --data-binary @- \
   localhost:19071/application/v2/tenant/default/prepareandactivate
 
@@ -30,7 +30,8 @@ curl --header Content-Type:application/zip -XPOST localhost:19071/application/v2
 Finally, run the Vespa sample ingestion and search. You might have to wait for a few seconds for the endpoint to be ready after the last command.
 
 ```sh
-ENDPOINT=http://localhost:8080 CONFIG_ENDPOINT=http://localhost:19071 poetry run src/vespa/hello.py
+poetry install
+ENDPOINT=http://localhost:8080 CONFIG_ENDPOINT=http://localhost:19071 poetry run ./hello.py
 
 > POST http://localhost:8080/document/v1/vector/vector/docid/vec1
 < POST http://localhost:8080/document/v1/vector/vector/docid/vec1 - 200

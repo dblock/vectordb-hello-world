@@ -9,7 +9,6 @@ docker run -p 6379:6379 redislabs/redisearch:latest
 Redis does not speak HTTP like the other databases, so we need some dependencies. Run a working sample as follows.
 
 ```
-cd src/redis
 poetry install
 poetry run ./hello.py
 

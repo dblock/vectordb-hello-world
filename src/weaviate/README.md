@@ -3,7 +3,8 @@
 Sign up at [Weaviate Cloud Services WCS](http://console.weaviate.cloud), and create a new free tier Weaviate Cluster with authentication. Note your cluster URL and API key.
 
 ```
-API_KEY=... ENDPOINT=https://my-cluster.weaviate.network poetry run src/weaviate/hello.py
+poetry install
+API_KEY=... ENDPOINT=https://my-cluster.weaviate.network poetry run ./hello.py
 
 
 > POST https://myindex.weaviate.network/v1/batch/objects

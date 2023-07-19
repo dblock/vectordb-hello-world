@@ -11,7 +11,7 @@ PostgreSQL does not speak HTTP like the other databases, so we need some depende
 
 ```
 poetry install
-poetry run ./hello.py
+PGPORT=5433 PGUSER=postgres PGPASSWORD=password poetry run ./hello.py
 
 <Record id='vec2' values=array([0.2, 0.3, 0.4], dtype=float32) metadata='{"genre": "action"}'> (action)
 ```

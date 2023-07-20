@@ -39,6 +39,7 @@ def main():
         "CREATE TABLE IF NOT EXISTS default.vectors (" \
             "id String," \
             "values Array(Float32)," \
+            "metadata Map(String, String)," \
             "CONSTRAINT check_length CHECK length(values) = 3," \
             "VECTOR INDEX values_index values TYPE MSTG" \
         ") " \
@@ -62,13 +63,14 @@ def main():
 
         for vector in vectors:
             client.post(endpoint, headers=headers, data=
-                f"INSERT INTO default.vectors (id, values) " \
-                f"VALUES (\'{vector['id']}\', {vector['values']})"
+                f"INSERT INTO default.vectors (id, values, metadata) " \
+                f"VALUES (\'{vector['id']}\', {vector['values']}, {vector['metadata']})"
             )
 
         results = client.post(endpoint, headers=headers, data=
             "SELECT * " \
             "FROM default.vectors " \
+            "WHERE metadata['genre']='action' " \
             "ORDER BY L2Distance(values, [0.2, 0.3, 0.4])"
         )
 

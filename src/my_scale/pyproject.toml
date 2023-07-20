@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "vectordb-hello-world-my-scale"
+version = "0.1.0"
+description = "Sample for querying vector DBs, MyScale edition."
+authors = ["Daniel Doubrovkine <dblock@dblock.org>"]
+license = "Apache 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+httpx = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

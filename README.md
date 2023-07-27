@@ -9,6 +9,7 @@ Samples, in alphabetical order, of querying vector DBs without using vendor-spec
 
 See [DEVELOPER_GUIDE](DEVELOPER_GUIDE.md) if you need to get setup with Python and poetry before running these.
 
+* [Chroma](src/chroma/README.md)
 * [ClickHouse](src/click_house/README.md)
 * [MyScale](src/my_scale/README.md)
 * [OpenSearch](src/open_search/README.md)

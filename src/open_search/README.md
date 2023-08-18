@@ -25,3 +25,5 @@ USERNAME=admin PASSWORD=admin ENDPOINT=https://localhost:9200 poetry run ./hello
 > DELETE https://localhost:9200/my-index
 < DELETE https://localhost:9200/my-index - 200
 ```
+
+See also [this example](hello-with-filter.py) that creates an index using a different k-nn engine and filters data by genre.

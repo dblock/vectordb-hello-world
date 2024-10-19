@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "vectordb-hello-world-mongodb"
+version = "0.1.0"
+description = "Sample for querying vector DBs, MongoDB Atlas edition."
+authors = ["Daniel Doubrovkine <dblock@dblock.org>"]
+license = "Apache 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pymongo = {extras = ["srv"], version = "^4.10.1"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
